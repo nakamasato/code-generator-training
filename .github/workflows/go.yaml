@@ -1,0 +1,26 @@
+name: go
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/go.yml
+      - "*.go"
+      - "go.*"
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ["1.17", "1.18"]
+    name: ${{ matrix.go }}
+    steps:
+      - name: set up
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+      - uses: actions/checkout@v3
+      - run: go test ./...
