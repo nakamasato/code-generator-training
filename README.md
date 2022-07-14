@@ -114,21 +114,10 @@ go get k8s.io/code-generator@v0.24.2
 	mkdir -p pkg/api/example.com/v1alpha1
 	```
 
-1. Add `pkg/api/example.com/v1alpha1/doc.go`
-
-	```go
-	// +k8s:deepcopy-gen=package
-	// +groupName=example.com
-
-	package v1alpha1
-	```
-
 
 1. Add `pkg/api/example.com/v1alpha1/types.go`
 
 	![](foo.drawio.svg)
-
-	<details><summary>pkg/api/example.com/v1alpha1/types.go</summary>
 
 	```go
 	package v1alpha1
@@ -136,9 +125,6 @@ go get k8s.io/code-generator@v0.24.2
 	import (
 		metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	)
-
-	// +genclient
-	// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 	// Foo is a specification for a Foo resource
 	type Foo struct {
@@ -160,8 +146,6 @@ go get k8s.io/code-generator@v0.24.2
 		AvailableReplicas int32 `json:"availableReplicas"`
 	}
 
-	// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
 	// FooList is a list of Foo resources
 	type FooList struct {
 		metav1.TypeMeta `json:",inline"`
@@ -171,7 +155,6 @@ go get k8s.io/code-generator@v0.24.2
 	}
 	```
 
-	</details>
 
 1. Make `go.mod` consistent with the source code.
 	```
@@ -197,7 +180,44 @@ go get k8s.io/code-generator@v0.24.2
 	- `apis-package`: the external types dir
 	- `groups-versions`: `"groupA:v1,v2 groupB:v1 groupC:v2"` (relative to `apis-package`)
 
-### 4.2. Generate deepcopy
+### 4.2. Add comment for deepcopy
+
+1. Add `pkg/api/example.com/v1alpha1/doc.go`
+
+	```go
+	// +k8s:deepcopy-gen=package
+	// +groupName=example.com
+
+	package v1alpha1
+	```
+
+1. Add `// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object` to Foo and FooList.
+
+	```go
+	// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+	// Foo is a specification for a Foo resource
+	type Foo struct {
+		metav1.TypeMeta   `json:",inline"`
+		metav1.ObjectMeta `json:"metadata,omitempty"`
+
+		Spec   FooSpec   `json:"spec"`
+		Status FooStatus `json:"status"`
+	}
+	...
+
+	// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+	// FooList is a list of Foo resources
+	type FooList struct {
+		metav1.TypeMeta `json:",inline"`
+		metav1.ListMeta `json:"metadata"`
+
+		Items []Foo `json:"items"`
+	}
+	```
+
+### 4.3. Generate deepcopy
 
 1. Generate DeepCopy by running `generate-groups.sh`.
 
@@ -277,6 +297,19 @@ go get k8s.io/code-generator@v0.24.2
 	```
 
 ## 4.3. Generate client
+
+1. Add `// +genclient` to `pkg/api/example.com/v1alpha1/types.go`.
+
+	```diff
+     package v1alpha1
+
+     import (
+	     metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	 )
+
+	+// +genclient
+	 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+	```
 
 1. Generate clientset by running `generate-groups.sh`.
 
