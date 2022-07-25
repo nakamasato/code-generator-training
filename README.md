@@ -53,7 +53,7 @@
 	client.Foos("default").List(context.TODO(), metav1.ListOptions{})
 	```
 
-1. **Lister** to *list* custom resources in a in-memory `cache.Indexer` with `List` function.
+1. **Lister** is to *list* custom resources in a in-memory `cache.Indexer` with `List` function.
 
 	```go
 	// FooLister helps list Foos.
