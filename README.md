@@ -4,7 +4,7 @@
 
 [code-generator](https://github.com/kubernetes/code-generator) is Golang code-generators used to implement Kubernetes-style API types (generate deepcopy, clientset, informer, lister)
 
-1. **DeepCopy** is necessary to implement [runtime.Object](https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#Object) interface. ([deepcopy-gen](https://pkg.go.dev/k8s.io/code-generator@v0.24.3/cmd/deepcopy-gen))
+1. **DeepCopy** is necessary to implement [runtime.Object](https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#Object) interface. ([deepcopy-gen](https://pkg.go.dev/k8s.io/code-generator@v0.24.3/cmd/deepcopy-gen), [deepcopy-gen](https://pkg.go.dev/k8s.io/gengo/examples/deepcopy-gen))
 
 
 	```go
@@ -216,6 +216,8 @@ go get k8s.io/code-generator@v0.24.2
 		Items []Foo `json:"items"`
 	}
 	```
+
+For more about comment tags, please check [deepcopy-gen](https://pkg.go.dev/k8s.io/gengo/examples/deepcopy-gen).
 
 ### 4.3. Generate deepcopy
 
