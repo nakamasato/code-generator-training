@@ -4,7 +4,7 @@
 
 [code-generator](https://github.com/kubernetes/code-generator) is Golang code-generators used to implement Kubernetes-style API types (generate deepcopy, clientset, informer, lister)
 
-1. **DeepCopy** is necessary to implement [runtime.Object](https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#Object) interface.
+1. **DeepCopy** is necessary to implement [runtime.Object](https://pkg.go.dev/k8s.io/apimachinery/pkg/runtime#Object) interface. ([deepcopy-gen](https://pkg.go.dev/k8s.io/code-generator@v0.24.3/cmd/deepcopy-gen), [deepcopy-gen](https://pkg.go.dev/k8s.io/gengo/examples/deepcopy-gen))
 
 
 	```go
@@ -16,7 +16,7 @@
 
 	> Object interface must be supported by all API types registered with Scheme. Since objects in a scheme are expected to be serialized to the wire, the interface an Object must provide to the Scheme allows serializers to set the kind, version, and group the object is represented as. An Object may choose to return a no-op ObjectKindAccessor in cases where it is not expected to be serialized.
 
-1. **Clientset** is to access a custom resource in Kubernetes API
+1. **Clientset** is to access a custom resource in Kubernetes API ([Generation and release cycle of clientset](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-api-machinery/generating-clientset.md))
 
 	[clientset](https://github.com/kubernetes/client-go/blob/master/kubernetes/clientset.go) is to access built-in Kubernetes API.
 
@@ -216,6 +216,8 @@ go get k8s.io/code-generator@v0.24.2
 		Items []Foo `json:"items"`
 	}
 	```
+
+For more about comment tags, please check [deepcopy-gen](https://pkg.go.dev/k8s.io/gengo/examples/deepcopy-gen).
 
 ### 4.3. Generate deepcopy
 
