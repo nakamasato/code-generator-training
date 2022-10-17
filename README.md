@@ -177,6 +177,7 @@ go get k8s.io/code-generator@v0.24.2
 
 	- `generators`: commna separateed (`deepcopy,defaulter,client,lister,informer`) or `"all"`
 	- `output-package`: the output package name
+	- `output-base`: Output base; defaults to $GOPATH/src/ or ./ if $GOPATH is not set.
 	- `apis-package`: the external types dir
 	- `groups-versions`: `"groupA:v1,v2 groupB:v1 groupC:v2"` (relative to `apis-package`)
 
